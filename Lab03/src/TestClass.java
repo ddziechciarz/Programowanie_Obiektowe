@@ -17,10 +17,15 @@ public class TestClass {
         System.out.println(number + "." + creation_time);
     }
 
-        public static void main (String[]args){
-            TestClass test = new TestClass();
-            test.setter(1);
-            test.display_data();
+        public static void main (String[]args){;
+        TestClass[] classTable;
+        classTable = new TestClass[3];
+            //TestClass[] classTable = new TestClass[3];
+            for (int i = 1; i <=3; i++){
+                classTable[i-1] = new TestClass();
+                classTable[i-1].setter(i);
+                classTable[i-1].display_data();
+            }
         }
 
 
