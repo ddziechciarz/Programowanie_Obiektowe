@@ -1,4 +1,8 @@
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Paths;
 
 public class FileCopy {
@@ -12,15 +16,23 @@ public class FileCopy {
         File source = new File(args[0]);
         File destination = new File(args[1]);
 
-        if(!source.exists()){
-            System.out.println("Plik" + source.getName() + " nie istnieje");
+        boolean isURL = checkURL(args[0]);
+
+        // check if source is URL address
+        if(!isURL){
+            // if it itsn't, perform more checks for file
+            if(!source.exists()){
+                System.out.println("Plik" + source.getName() + " nie istnieje");
+            }
+            if(source.isDirectory()){
+                System.out.println("Plik " + source.getName() + " jest katalogiem");
+            }
+            if(!source.canRead()){
+                System.out.println("Brak dostępu do pliku " + source.getName());
+            }
         }
-        if(source.isDirectory()){
-            System.out.println("Plik " + source.getName() + " jest katalogiem");
-        }
-        if(!source.canRead()){
-            System.out.println("Brak dostępu do pliku " + source.getName());
-        }
+
+
         if(destination.isDirectory()){
             if(!destination.canWrite()){
                 System.out.println("Brak wymaganych uprawnień do katalogu " + destination.getName());
@@ -33,9 +45,26 @@ public class FileCopy {
             System.out.println("Nie można nadpisać pliku" + destination.getName());
         }
         try{
-            copyFile(source, destination);
+            if(isURL){
+                URL url = new URL(args[0]);
+                copyURL(url, destination);
+            }
+            else{
+                copyFile(source, destination);
+            }
+
         } catch (IOException e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    public static boolean checkURL(String urlString){
+        try{
+            URL url = new URL(urlString);
+            url.toURI();
+            return true;
+        }catch(Exception e){
+            return false;
         }
     }
 
@@ -58,5 +87,25 @@ public class FileCopy {
             input.close();
             output.close();
         }
+    }
+
+    private static void copyURL(URL url, File dst) throws IOException{
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.connect();
+        int code = conn.getResponseCode();
+        if(code < 200 || code > 299){
+            System.out.println("Adres " + url.toString() + " zwraca status " + code);
+        }
+        FileOutputStream output = null;
+        try{
+            ReadableByteChannel input = Channels.newChannel(url.openStream());
+            output = new FileOutputStream(dst);
+            output.getChannel().transferFrom(input, 0, Long.MAX_VALUE);
+        }
+        finally {
+            output.close();
+        }
+
     }
 }
