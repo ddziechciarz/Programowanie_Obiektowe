@@ -1,3 +1,4 @@
 test javy
-jak to 
 działa
+więcej znaków i słów
+do testowania
