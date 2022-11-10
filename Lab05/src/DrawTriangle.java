@@ -20,11 +20,16 @@ public class DrawTriangle {
     public static void printTriangle(int height){
         int baseSize = height * 2 - 1;
         for(int i = 0; i < height; i++){
-            int paddingSize = 4 - (i+1);
+            int paddingSize = height - (i+1);
             String padding = "";
             for(int a = 0; a < paddingSize; a++){
                 padding += " ";
             }
+            String triangle = "";
+            for(int b = 0; b < i*2+1; b++){
+                triangle += "#";
+            }
+            System.out.println(padding +triangle);
 
         }
     }
