@@ -9,7 +9,12 @@ public class LineCounter {
             return;
         }
         BufferedReader reader;
-        reader = new BufferedReader(new FileReader(args[0]));
+        try{
+            reader = new BufferedReader(new FileReader(args[0]));
+        }catch (Exception e){
+            return;
+        }
+
         String s;
         int lineCount = 0;
         int wordCount = 0;
@@ -21,19 +26,19 @@ public class LineCounter {
             wordCount += words.length;
         }
         String toPrint = "";
-        boolean w = checkArg(args, "w");
-        boolean c = checkArg(args, "c");
-        boolean l = checkArg(args, "l");
-        boolean printAll = !w && !c && !l;
+        boolean words = checkArg(args, "w");
+        boolean chars = checkArg(args, "c");
+        boolean lines = checkArg(args, "l");
+        boolean printAll = !words && !chars && !lines;
         //System.out.println(" " + w + c + l + printAll);
-        if(w || printAll){
-            System.out.println("wierszy: " + wordCount);
+        if(words || printAll){
+            System.out.println("słów: " + wordCount);
         }
-        if(c || printAll){
+        if(chars || printAll){
             System.out.println("znaków: " + charCount);
         }
-        if(l || printAll){
-            System.out.println("słów: " + lineCount);
+        if(lines || printAll){
+            System.out.println("lini: " + lineCount);
         }
 
 }
