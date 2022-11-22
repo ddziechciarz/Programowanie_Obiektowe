@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.FlowLayout;
+import javax.swing.JTextField;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,16 +12,35 @@ public class Main {
     }
 
     public static void CreateAndShowGUI(){
+        // frame settings
         JFrame jf = new JFrame("Calculator");
+        jf.setSize(600,200);
+        jf.setLocationRelativeTo(null);
+        jf.setResizable(false);
         jf.setLayout(new BorderLayout());
 
-        JPanel buttons = new JPanel();
+        // texfield settings
+        JTextField textfield = new JTextField();
+        textfield.setBounds(0,5,400,50);
+        textfield.setEditable(false);
+        textfield.setHorizontalAlignment(JTextField.RIGHT);
+        textfield.setText("test");
+        jf.add(textfield);
+        Font scoreFont = new Font("Arial",Font.BOLD,16);
+        textfield.setFont(scoreFont);
 
+
+        JPanel buttons = new JPanel();
+        buttons.setSize(600,300);
+
+        // adding buttons in panel buttons
         jf.getContentPane().add(buttons, BorderLayout.SOUTH);
         buttons.setLayout(new GridLayout(4, 4));
         String[] calcButtons = {"1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "*", "0", "=", "C", "/"};
         for(String mark:calcButtons){
-           
+            JButton button = new JButton(mark);
+            button.setFont(scoreFont);
+            buttons.add(button);
         }
 
 
@@ -63,7 +83,6 @@ public class Main {
             operators.add(jb);
         }
         */
-        jf.pack();
         jf.setVisible(true);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
