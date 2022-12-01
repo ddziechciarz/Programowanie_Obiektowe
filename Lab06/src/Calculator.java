@@ -13,8 +13,8 @@ public class Calculator implements ActionListener {
     JPanel buttons;
     JTextField textField;
     Font resaultFont = new Font("Arial",Font.BOLD,16);
-    double num1 = 0, num2 = 0, resault = 0;
-    String first = "", second = "", operator, toPrint = "";
+    double num1 = 0, num2 = 0, resault = 0, helper = 0;
+    String first = "", second = "0", operator;
 
     Calculator(){
         // frame setting
@@ -29,7 +29,7 @@ public class Calculator implements ActionListener {
         textField.setBounds(0,0,435,40);
         textField.setEditable(false);
         textField.setHorizontalAlignment(JTextField.RIGHT);
-        textField.setText("test");
+        textField.setText("0");
         textField.setFont(resaultFont);
 
         // adding buttons in panel buttons
@@ -98,10 +98,15 @@ public class Calculator implements ActionListener {
     }
 
     public void OperatorPressed(String opr){
+
         if(second.isEmpty()){
             return;
         }
-        first = second;
+        if(first.isEmpty()){
+            first = second;
+            second = "";
+        }
+        System.out.println(first + " " + second);
         second = "";
         operator = opr;
         writeOutput();
@@ -121,7 +126,8 @@ public class Calculator implements ActionListener {
         }
         if(e.getSource() == subsButton){
             System.out.println("Pressed subs Button");
-            OperatorPressed(subsButton.getText());
+            OperatorPressed(addButton.getText());
+            addToPrint("-");
         }
         if(e.getSource() == multButton){
             System.out.println("Pressed mult Button");
@@ -133,32 +139,63 @@ public class Calculator implements ActionListener {
         }
         if(e.getSource() == clrsButton){
             first = "";
-            second = "";
+            second = "0";
             operator = "";
         }
         if(e.getSource() == eqButton){
-            if(second.length() > 0){
+            if(first.length() > 0 && second.length() > 0){
                 num1 = Double.parseDouble(first);
                 num2 = Double.parseDouble(second);
-                switch (operator){
-                    case "+":
-                        resault = num1 + num2;
-                        break;
-                    case "-":
-                        resault = num1 - num2;
-                        break;
-                    case "*":
-                        resault = num1 * num2;
-                        break;
-                    case "/":
-                        resault = num1 / num2;
-                        break;
-                }
-                first = second;
-                second = Integer.toString((int)Math.round(resault));
+//                switch (operator){
+//                    case "+":
+//                        resault = num1 + num2;
+//                        break;
+//                    case "-":
+//                        resault = num1 - num2;
+//                        break;
+//                    case "*":
+//                        resault = num1 * num2;
+//                        break;
+//                    case "/":
+//                        if(num2 == 0){
+//                            textField.setText("Error, division by 0");
+//                            return;
+//                        }
+//                        resault = num1 / num2;
+//                        break;
+//                }
+//                first = Integer.toString((int)num2);
+//                second = Integer.toString((int)Math.floor(resault));
+                Calculate(num1, num2, operator);
+                return;
             }
         }
         writeOutput();
+    }
+
+    public void Calculate(double n1, double n2, String operator){
+        double rs = 0;
+        switch (operator){
+            case "+":
+                rs = n1 + n2;
+                break;
+            case "-":
+                rs = n1 - n2;
+                break;
+            case "*":
+                rs = n1 * n2;
+                break;
+            case "/":
+                if(n2 == 0){
+                    textField.setText("Error, division by 0");
+                    return;
+                }
+                rs = n1 / n2;
+                break;
+        }
+        first = Integer.toString((int)Math.floor(rs));
+        second = Integer.toString((int)n2);
+        textField.setText(first);
     }
     public static void main(String[] args) {
 
