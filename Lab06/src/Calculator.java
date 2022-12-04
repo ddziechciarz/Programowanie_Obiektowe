@@ -15,6 +15,7 @@ public class Calculator implements ActionListener {
     Font resaultFont = new Font("Arial",Font.BOLD,16);
     double num1 = 0, num2 = 0, resault = 0, helper = 0;
     String first = "", second = "0", operator;
+    boolean justPressedEq = false;
 
     Calculator(){
         // frame setting
@@ -94,6 +95,9 @@ public class Calculator implements ActionListener {
     }
 
     public void addToPrint(String txt){
+        if(second =="0"){
+            second = "";
+        }
         second += txt;
     }
 
@@ -112,30 +116,89 @@ public class Calculator implements ActionListener {
         writeOutput();
     }
 
+    public void OperatorButtonPressed(JButton button){
+        if(!first.isEmpty() && !second.isEmpty() && justPressedEq==false && second!="-"){
+            num1 = Double.parseDouble(first);
+            num2 = Double.parseDouble(second);
+            Calculate(num1, num2, operator);
+        }
+        OperatorPressed(button.getText());
+        System.out.println("F: " + first + " S: " + second);
+        justPressedEq = false;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e){
         for(int i = 0; i < 10; i++){
             if(e.getSource() == numberButtons[i]){
                 addToPrint(numberButtons[i].getText());
+                System.out.println("F: " + first + " S: " + second);
             }
 
         }
         if(e.getSource() == addButton){
-            System.out.println("Pressed Add Button");
-            OperatorPressed(addButton.getText());
+//            System.out.println("Pressed Add Button");
+//            if(!first.isEmpty() && !second.isEmpty() && justPressedEq==false){
+//                System.out.println("two operators pressed");
+//                num1 = Double.parseDouble(first);
+//                num2 = Double.parseDouble(second);
+//                Calculate(num1, num2, operator);
+//            }
+//            OperatorPressed(addButton.getText());
+//            System.out.println("F: " + first + " S: " + second);
+//            justPressedEq = false;
+            OperatorButtonPressed(addButton);
+
         }
         if(e.getSource() == subsButton){
-            System.out.println("Pressed subs Button");
-            OperatorPressed(addButton.getText());
-            addToPrint("-");
+//            System.out.println("Pressed subs Button");
+//            if(!first.isEmpty() && !second.isEmpty()){
+//                System.out.println("two operators pressed");
+//                num1 = Double.parseDouble(first);
+//                num2 = Double.parseDouble(second);
+//                Calculate(num1, num2, operator);
+//            }
+//
+//            OperatorPressed(addButton.getText());
+            System.out.println(second);
+            if(second == "-"){
+                second = "";
+
+            }
+            if(second.startsWith("-")){
+                if(second.length() == 1){
+                    second = "-";
+                }
+                else{
+                    second = second.substring(1);
+                }
+
+            }else{
+                OperatorButtonPressed(addButton);
+                addToPrint("-");
+            }
         }
         if(e.getSource() == multButton){
-            System.out.println("Pressed mult Button");
-            OperatorPressed(multButton.getText());
+//            System.out.println("Pressed mult Button");
+//            if(!first.isEmpty() && !second.isEmpty()){
+//                System.out.println("two operators pressed");
+//                num1 = Double.parseDouble(first);
+//                num2 = Double.parseDouble(second);
+//                Calculate(num1, num2, operator);
+//            }
+//            OperatorPressed(multButton.getText());
+            OperatorButtonPressed(multButton);
         }
         if(e.getSource() == divButton){
-            System.out.println("Pressed div Button");
-            OperatorPressed(divButton.getText());
+//            System.out.println("Pressed div Button");
+//            if(!first.isEmpty() && !second.isEmpty()){
+//                System.out.println("two operators pressed");
+//                num1 = Double.parseDouble(first);
+//                num2 = Double.parseDouble(second);
+//                Calculate(num1, num2, operator);
+//            }
+//            OperatorPressed(divButton.getText());
+            OperatorButtonPressed(multButton);
         }
         if(e.getSource() == clrsButton){
             first = "";
@@ -143,30 +206,11 @@ public class Calculator implements ActionListener {
             operator = "";
         }
         if(e.getSource() == eqButton){
-            if(first.length() > 0 && second.length() > 0){
+            if(first.length() > 0 && second.length() > 0 && second!="-"){
                 num1 = Double.parseDouble(first);
                 num2 = Double.parseDouble(second);
-//                switch (operator){
-//                    case "+":
-//                        resault = num1 + num2;
-//                        break;
-//                    case "-":
-//                        resault = num1 - num2;
-//                        break;
-//                    case "*":
-//                        resault = num1 * num2;
-//                        break;
-//                    case "/":
-//                        if(num2 == 0){
-//                            textField.setText("Error, division by 0");
-//                            return;
-//                        }
-//                        resault = num1 / num2;
-//                        break;
-//                }
-//                first = Integer.toString((int)num2);
-//                second = Integer.toString((int)Math.floor(resault));
                 Calculate(num1, num2, operator);
+                justPressedEq = true;
                 return;
             }
         }
