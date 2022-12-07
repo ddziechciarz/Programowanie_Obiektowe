@@ -160,23 +160,15 @@ public class Calculator implements ActionListener {
 //            }
 //
 //            OperatorPressed(addButton.getText());
-            System.out.println(second);
-            if(second == "-"){
-                second = "";
-
+            if(!second.isEmpty()){
+                OperatorButtonPressed(subsButton);
             }
-            if(second.startsWith("-")){
-                if(second.length() == 1){
-                    second = "-";
-                }
-                else{
-                    second = second.substring(1);
-                }
-
-            }else{
-                OperatorButtonPressed(addButton);
-                addToPrint("-");
+            else{
+                second = "0";
             }
+
+            return;
+
         }
         if(e.getSource() == multButton){
 //            System.out.println("Pressed mult Button");
@@ -227,6 +219,7 @@ public class Calculator implements ActionListener {
                 rs = n1 - n2;
                 break;
             case "*":
+                System.out.println("multiplying " + n1 + " " + n2);
                 rs = n1 * n2;
                 break;
             case "/":
