@@ -113,7 +113,7 @@ public class Calculator implements ActionListener {
         System.out.println(first + " " + second);
         second = "";
         operator = opr;
-        writeOutput();
+        //writeOutput();
     }
 
     public void OperatorButtonPressed(JButton button){
@@ -121,6 +121,8 @@ public class Calculator implements ActionListener {
             num1 = Double.parseDouble(first);
             num2 = Double.parseDouble(second);
             Calculate(num1, num2, operator);
+            System.out.println(first + " wynik działania");
+            textField.setText(first);
         }
         OperatorPressed(button.getText());
         System.out.println("F: " + first + " S: " + second);
@@ -133,20 +135,11 @@ public class Calculator implements ActionListener {
             if(e.getSource() == numberButtons[i]){
                 addToPrint(numberButtons[i].getText());
                 System.out.println("F: " + first + " S: " + second);
+                writeOutput();
             }
 
         }
         if(e.getSource() == addButton){
-//            System.out.println("Pressed Add Button");
-//            if(!first.isEmpty() && !second.isEmpty() && justPressedEq==false){
-//                System.out.println("two operators pressed");
-//                num1 = Double.parseDouble(first);
-//                num2 = Double.parseDouble(second);
-//                Calculate(num1, num2, operator);
-//            }
-//            OperatorPressed(addButton.getText());
-//            System.out.println("F: " + first + " S: " + second);
-//            justPressedEq = false;
             OperatorButtonPressed(addButton);
 
         }
@@ -171,34 +164,21 @@ public class Calculator implements ActionListener {
 
         }
         if(e.getSource() == multButton){
-//            System.out.println("Pressed mult Button");
-//            if(!first.isEmpty() && !second.isEmpty()){
-//                System.out.println("two operators pressed");
-//                num1 = Double.parseDouble(first);
-//                num2 = Double.parseDouble(second);
-//                Calculate(num1, num2, operator);
-//            }
-//            OperatorPressed(multButton.getText());
             OperatorButtonPressed(multButton);
         }
         if(e.getSource() == divButton){
-//            System.out.println("Pressed div Button");
-//            if(!first.isEmpty() && !second.isEmpty()){
-//                System.out.println("two operators pressed");
-//                num1 = Double.parseDouble(first);
-//                num2 = Double.parseDouble(second);
-//                Calculate(num1, num2, operator);
-//            }
-//            OperatorPressed(divButton.getText());
             OperatorButtonPressed(multButton);
         }
         if(e.getSource() == clrsButton){
             first = "";
             second = "0";
             operator = "";
+            textField.setText(second);
         }
         if(e.getSource() == eqButton){
+            System.out.println("performing " + operator + " on first: " + first + " and second: " + second);
             if(first.length() > 0 && second.length() > 0 && second!="-"){
+
                 num1 = Double.parseDouble(first);
                 num2 = Double.parseDouble(second);
                 Calculate(num1, num2, operator);
@@ -206,7 +186,7 @@ public class Calculator implements ActionListener {
                 return;
             }
         }
-        writeOutput();
+
     }
 
     public void Calculate(double n1, double n2, String operator){
