@@ -144,15 +144,6 @@ public class Calculator implements ActionListener {
 
         }
         if(e.getSource() == subsButton){
-//            System.out.println("Pressed subs Button");
-//            if(!first.isEmpty() && !second.isEmpty()){
-//                System.out.println("two operators pressed");
-//                num1 = Double.parseDouble(first);
-//                num2 = Double.parseDouble(second);
-//                Calculate(num1, num2, operator);
-//            }
-//
-//            OperatorPressed(addButton.getText());
             if(!second.isEmpty()){
                 OperatorButtonPressed(subsButton);
             }
@@ -183,7 +174,6 @@ public class Calculator implements ActionListener {
                 num2 = Double.parseDouble(second);
                 Calculate(num1, num2, operator);
                 justPressedEq = true;
-                return;
             }
         }
 

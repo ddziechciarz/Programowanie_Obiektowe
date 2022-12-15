@@ -6,19 +6,28 @@ import java.awt.event.ActionListener;
 
 public class Calculator {
 
+
+
+    static JTextField textField;
+    private static int temp, num1, num2;
+    private static String lastOperator;
+    private static Input lastInput = Input.ACTION;
+    static boolean zeroDivision = false;
+    static boolean solved = true;
+    static boolean hasBeenSolved = true;
+
     enum Input {
         NUMBER,
         EQUAL,
         ACTION,
     }
 
-    static JTextField textField;
-    private static int temp, int1, int2;
-    private static String lastSign;
-    private static Input lastInput = Input.ACTION;
-    static boolean dividingByZero = false;
-    static boolean solved = true;
-    static boolean hasBeenSolved = true;
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() { createAndShowGUI(); }
+        });
+    }
+
     public static void createAndShowGUI() {
 
         ActionListener myActionListener = new ActionListener() {
@@ -26,16 +35,16 @@ public class Calculator {
                 String buttonPressed = e.getActionCommand();
                 switch (buttonPressed) {
                     case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
-                        pressNumber(buttonPressed);
+                        PressNum(buttonPressed);
                         break;
                     case "+", "-", "*", "/":
-                        pressSign(buttonPressed);
+                        PressOperator(buttonPressed);
                         break;
                     case "=":
-                        pressEquals();
+                        PressEq();
                         break;
                     case "C":
-                        clean();
+                        CleanCalc();
                         break;
                     default:
                         System.out.println("Nieznany przycisk");
@@ -96,7 +105,7 @@ public class Calculator {
         // Ustawienia okna
         jf.setResizable(false);
         jf.setLayout(null);
-        jf.setSize(326, 255); // + 16 bo windows dodaje swoje wlasne ramki do wielkosci calego okna
+        jf.setSize(320, 250);
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Dodanie pól do okna
@@ -104,8 +113,62 @@ public class Calculator {
         jf.add(jp);
         jf.setVisible(true);
     }
-    public static void pressNumber(String pressed) {
-        if (dividingByZero) {
+
+    private static void PressEq() {
+        if (zeroDivision) {
+            return;
+        }
+        if (lastOperator == null) {
+            solved = true;
+            lastInput = Input.ACTION;
+            hasBeenSolved = true;
+            if (!textField.getText().isEmpty()) {
+                num2 = Integer.parseInt(textField.getText());
+            }
+            return;
+        }
+        if (lastInput == Input.EQUAL) {
+            num2 = temp;
+        } else {
+            temp = num2;
+            num1 = Integer.parseInt(textField.getText());
+        }
+        switch (lastOperator) {
+            case "+":
+                temp = num2 + num1;
+                break;
+            case "-":
+                temp = num2 - num1;
+                break;
+            case "*":
+                temp = num2 * num1;
+                break;
+            case "/":
+                if (num1 == 0) {
+                    CleanCalc();
+                    textField.setText("can't divide by 0!");
+                    zeroDivision = true;
+                    return;
+                }
+                temp = num2 / num1;
+                break;
+        }
+        textField.setText(String.valueOf(temp));
+        lastInput = Input.EQUAL;
+        solved = true;
+    }
+    public static void CleanCalc() {
+        textField.setText("0");
+        num1 = 0;
+        num2 = 0;
+        lastOperator = null;
+        lastInput = Input.ACTION;
+        hasBeenSolved = true;
+        zeroDivision = false;
+    }
+
+    public static void PressNum(String pressed) {
+        if (zeroDivision) {
             return;
         }
         if (lastInput == Input.ACTION || textField.getText().startsWith("0")) {
@@ -113,92 +176,34 @@ public class Calculator {
         }
         if (lastInput == Input.EQUAL) {
             textField.setText("");
-            lastSign = null;
+            lastOperator = null;
         }
         textField.setText(textField.getText().concat(pressed));
         lastInput = Input.NUMBER;
     }
 
-    private static void pressSign(String pressed) {
-        if (dividingByZero) {
+    private static void PressOperator(String pressed) {
+        if (zeroDivision) {
             return;
         }
         if(lastInput == Input.ACTION) {
-            lastSign = pressed;
+            lastOperator = pressed;
             solved = false;
             return;
         }
         if (!solved) {
-            pressEquals();
+            PressEq();
             solved = true;
         }
-        int2 = Integer.parseInt(textField.getText());
-        lastSign = pressed;
+        num2 = Integer.parseInt(textField.getText());
+        lastOperator = pressed;
         solved = false;
         lastInput = Input.ACTION;
     }
 
-    private static void pressEquals() {
-        if (dividingByZero) {
-            return;
-        }
-        if (lastSign == null) {
-            solved = true;
-            lastInput = Input.ACTION;
-            hasBeenSolved = true;
-            if (!textField.getText().isEmpty()) {
-                int2 = Integer.parseInt(textField.getText());
-            }
-            return;
-        }
-        if (lastInput == Input.EQUAL) {
-            int2 = temp;
-        } else {
-            temp = int2;
-            int1 = Integer.parseInt(textField.getText());
-        }
-        switch (lastSign) {
-            case "+":
-                temp = int2 + int1;
-                break;
-            case "-":
-                temp = int2 - int1;
-                break;
-            case "*":
-                temp = int2 * int1;
-                break;
-            case "/":
-                if (int1 == 0) {
-                    clean();
-                    textField.setText("ERROR: DIVISION BY ZERO");
-                    dividingByZero = true;
-                    return;
-                }
-                temp = int2 / int1;
-                break;
-        }
-        textField.setText(String.valueOf(temp));
-        lastInput = Input.EQUAL;
-        solved = true;
-    }
 
-    public static void clean() {
-        textField.setText("0");
-        int1 = 0;
-        int2 = 0;
-        lastSign = null;
-        lastInput = Input.ACTION;
-        hasBeenSolved = true;
-        dividingByZero = false;
-    }
 
-    public static void main(String[] args) {
-        System.out.println("Before");
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() { createAndShowGUI(); }
-        });
 
-        System.out.println("After");
-    }
+
 }
