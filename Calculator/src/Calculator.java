@@ -18,7 +18,7 @@ public class Calculator {
 
     enum Input {
         NUMBER,
-        EQUAL,
+        EQ,
         ACTION,
     }
 
@@ -127,7 +127,7 @@ public class Calculator {
             }
             return;
         }
-        if (lastInput == Input.EQUAL) {
+        if (lastInput == Input.EQ) {
             num2 = temp;
         } else {
             temp = num2;
@@ -154,7 +154,7 @@ public class Calculator {
                 break;
         }
         textField.setText(String.valueOf(temp));
-        lastInput = Input.EQUAL;
+        lastInput = Input.EQ;
         solved = true;
     }
     public static void CleanCalc() {
@@ -174,7 +174,7 @@ public class Calculator {
         if (lastInput == Input.ACTION || textField.getText().startsWith("0")) {
             textField.setText("");
         }
-        if (lastInput == Input.EQUAL) {
+        if (lastInput == Input.EQ) {
             textField.setText("");
             lastOperator = null;
         }
