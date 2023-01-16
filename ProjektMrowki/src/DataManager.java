@@ -69,4 +69,7 @@ public class DataManager {
         }
     }
 
+    public ArrayList<Country> GetData(){
+        return countries;
+    }
 }

@@ -22,9 +22,9 @@ public class Main {
         DataManager dataManager = new DataManager();
         dataManager.DownloadCountriesWithSpeciesNumber();
         dataManager.SortData(sortType.ENDEMIC);
-        dataManager.DisplayData();
 
-        UIManager uiManager = new UIManager("ant app", 300, 600);
+        UIManager uiManager = new UIManager("ant app", 500, 600);
+        uiManager.AddTable(dataManager.GetData());
         uiManager.ShowUI();
     }
 
