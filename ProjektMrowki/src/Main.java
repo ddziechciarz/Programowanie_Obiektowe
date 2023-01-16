@@ -9,11 +9,26 @@ import java.io.IOException;
 import java.net.URL;
 import java.io.File;
 
+enum sortType{
+    SPECIES,
+    ENDEMIC,
+    ALPHABETICALLY
+}
+
 public class Main {
     private static String antUrl = "https://www.antwiki.org/wiki/images/0/0c/AntWiki_Regional_Taxon_List.txt";
 
-
     public static void main(String[] args) throws IOException {
+        DataManager dataManager = new DataManager();
+        dataManager.DownloadCountriesWithSpeciesNumber();
+        dataManager.SortData(sortType.ENDEMIC);
+        dataManager.DisplayData();
+
+        UIManager uiManager = new UIManager("ant app", 300, 600);
+        uiManager.ShowUI();
+    }
+
+    private void DownloadAntTxt(){
         File f = new File("mrowki.txt");
         if(f.exists() && !f.isDirectory()) {
             // do something
@@ -25,9 +40,9 @@ public class Main {
                 e.printStackTrace();
             }
         }
-
-
     }
+
+
 
     private static void downloadUsingStream(String urlStr, String file) throws IOException{
         URL url = new URL(urlStr);
