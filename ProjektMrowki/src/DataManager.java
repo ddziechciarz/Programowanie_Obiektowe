@@ -5,10 +5,11 @@ import org.jsoup.nodes.Element;
 import java.util.*;
 
 
-public class DataManager {
-    private ArrayList<Country> countries;
+public class DataManager extends UIManager{
+
     private final String countryListURL = "https://www.antwiki.org/wiki/Diversity_by_Country";
-    public DataManager(){
+    public DataManager(String appName, int width, int height){
+        super(appName, width, height);
         countries = new ArrayList<Country>();
     }
 

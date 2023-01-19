@@ -3,6 +3,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.xml.crypto.Data;
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,19 +17,24 @@ enum sortType{
 }
 
 public class Main {
-    private static String antUrl = "https://www.antwiki.org/wiki/images/0/0c/AntWiki_Regional_Taxon_List.txt";
+    //private static String antUrl = "https://www.antwiki.org/wiki/images/0/0c/AntWiki_Regional_Taxon_List.txt";
 
     public static void main(String[] args) throws IOException {
-        DataManager dataManager = new DataManager();
-        dataManager.DownloadCountriesWithSpeciesNumber();
-        dataManager.SortData(sortType.ENDEMIC);
+        //DataManager dataManager = new DataManager();
+        //dataManager.DownloadCountriesWithSpeciesNumber();
+        //dataManager.SortData(sortType.ENDEMIC);
 
-        UIManager uiManager = new UIManager("ant app", 500, 600);
-        uiManager.AddTable(dataManager.GetData());
-        uiManager.ShowUI();
+        //UIManager uiManager = new UIManager("ant app", 500, 600);
+        //uiManager.AddTable(dataManager.GetData());
+        //uiManager.ShowUI();
+
+        DataManager dataManager = new DataManager("anp app", 500, 600);
+        dataManager.DownloadCountriesWithSpeciesNumber();
+        dataManager.AddTable();
+        dataManager.ShowUI();
     }
 
-    private void DownloadAntTxt(){
+    /*private void DownloadAntTxt(){
         File f = new File("mrowki.txt");
         if(f.exists() && !f.isDirectory()) {
             // do something
@@ -40,7 +46,7 @@ public class Main {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
 
 

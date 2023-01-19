@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public abstract class WebPage {
 
-    private String url;
+    String url;
     protected WebPage(String url){
         this.url = url;
     }
@@ -13,6 +13,9 @@ public abstract class WebPage {
      dla każdego wiersza w tablicy:
      satelity.add(new Satelite(paramtetry pobrane z tablict));
      return satelity;*/
-    public abstract ArrayList<Satelite>();
+
+    public abstract ArrayList<Satelite> downloadPage();
+
+    public abstract void PrintData();
 
 }

@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UIManager {
 
@@ -11,6 +12,8 @@ public class UIManager {
     private JPanel dataPanel;
     private JTable table;
     private JScrollPane scrollPane;
+
+    protected ArrayList<Country> countries;
 
     private String[] columnNames = {"Country", "Species Count", "Endemic species count"};
 
@@ -30,23 +33,33 @@ public class UIManager {
 
     }
 
-    public void AddTable(ArrayList<Country> data){
+    public void AddTable(){
 
-        table = new JTable(data.size(), columnNames.length);
+        Object[][] emptyTableData = new Object[countries.size()][columnNames.length];
+        System.out.println(emptyTableData.length + " " + emptyTableData[0].length);
+
+        //table = new JTable(countries.size(), columnNames.length);
+        table = new JTable(emptyTableData, columnNames);
         table.setBounds(0,0,jFrame.getWidth(),jFrame.getHeight() * 3/5);
         scrollPane = new JScrollPane(table);
         dataPanel.add(scrollPane);
+        table.setAutoCreateRowSorter(true);
 
 
-        FillTable(data);
+        FillTable(countries);
     }
 
-    public void FillTable(ArrayList<Country> data){
-        for(int i = 0; i < data.size(); i++){
+    public void FillTable(ArrayList<Country> data) {
+        for (int i = 0; i < data.size(); i++) {
             table.setValueAt(data.get(i).getCountryName(), i, 0);
             table.setValueAt(data.get(i).getSpeciesCount(), i, 1);
             table.setValueAt(data.get(i).getEndemicSpeciesCount(), i, 2);
+
         }
+    }
+
+    protected void SortAndDisplayTable(sortType type){
+
     }
 
 
