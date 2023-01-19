@@ -21,7 +21,7 @@ public class SatBeams extends WebPage {
         //pobiera dane i tworzy nowe satelity
 
         int[] id = new int[365];
-        String url = "https://satbeams.com/satellites?status=active";
+        //String url = "https://satbeams.com/satellites?status=active";
         try{
             Document doc = Jsoup.connect(url).get();
             Elements table = doc.selectXpath("//*[@id=\"sat_grid\"]");   //#sat_grid.sat_grid
