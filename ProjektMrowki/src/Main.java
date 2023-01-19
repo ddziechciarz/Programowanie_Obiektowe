@@ -22,7 +22,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         //DataManager dataManager = new DataManager();
         //dataManager.DownloadCountriesWithSpeciesNumber();
-        //dataManager.SortData(sortType.ENDEMIC);
+        
 
         //UIManager uiManager = new UIManager("ant app", 500, 600);
         //uiManager.AddTable(dataManager.GetData());
