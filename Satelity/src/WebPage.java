@@ -8,6 +8,7 @@ public abstract class WebPage {
     protected WebPage(String url){
         this.url = url;
         satelites = new ArrayList<Satelite>();
+        DownloadPage();
     }
 
     /**ArrayList<Setelite> satelity;
