@@ -61,6 +61,7 @@ public class SatBeams extends WebPage {
                 Satelite sat = new Satelite(sateliteNames, pos);
                 sat.AddOperator(operator);
                 sat.AddModel(sateliteModel);
+                sat.AddDate(launchDate);
                 if(extraNames != " "){
                     sat.AddNames(extraNames);
                 }

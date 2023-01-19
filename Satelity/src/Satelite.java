@@ -37,6 +37,9 @@ public class Satelite {
         String[] names = extraNames.split(",");
         Collections.addAll(name, names);
     }
+    public void AddDate(String date){
+        launchDate = date;
+    }
 
 
     public void PrintData(){
@@ -49,17 +52,15 @@ public class Satelite {
         if(model != null){
             System.out.print(" | model: " + model);
         }
+        if(launchDate != null){
+            System.out.print(" | launch date: " + launchDate);
+        }
         if(name.size() > 1){
             System.out.print(" | extra names : ");
             for (int i = 1; i< name.size(); i++){
                 System.out.print(name.get(i) + ", ");
             }
         }
-
-
         System.out.println("");
-
     }
-
-
 }
