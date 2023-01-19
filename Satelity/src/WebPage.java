@@ -17,8 +17,12 @@ public abstract class WebPage {
      satelity.add(new Satelite(paramtetry pobrane z tablict));
      return satelity;*/
 
-    public abstract void downloadPage();
+    public abstract void DownloadPage();
 
-    public abstract void PrintData();
+    public void PrintData(){
+        for (Satelite sat : satelites){
+            sat.PrintData();
+        }
+    }
 
 }

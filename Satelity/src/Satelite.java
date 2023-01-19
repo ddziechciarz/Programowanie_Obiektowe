@@ -25,5 +25,9 @@ public class Satelite {
         orbitalPosition = oribtalPos;
     }
 
+    public void PrintData(){
+        System.out.println("name: " + name + " position: " + orbitalPosition);
+    }
+
 
 }

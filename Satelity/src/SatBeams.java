@@ -17,12 +17,12 @@ public class SatBeams extends WebPage {
         super(url);
     }
     @Override
-    public void downloadPage() {
+    public void DownloadPage() {
         //pobiera dane i tworzy nowe satelity
 
-        static int[] id = new int[365];
-        static void gettingData() throws IOException {
-            String url = "https://satbeams.com/satellites?status=active";
+        int[] id = new int[365];
+        String url = "https://satbeams.com/satellites?status=active";
+        try{
             Document doc = Jsoup.connect(url).get();
             Elements table = doc.selectXpath("//*[@id=\"sat_grid\"]");   //#sat_grid.sat_grid
             //System.out.println(table);
@@ -48,19 +48,31 @@ public class SatBeams extends WebPage {
                 id[i] = Integer.parseInt(norad);
                 arr[i] = Integer.parseInt(norad);
                 i++;
-                System.out.println(position + " " + position1 + " " + status + " " + sateliteName + " " + norad + " " + sateliteModel + " " + launchDate);
-                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s", position, position1, status, sateliteName, norad, sateliteModel, operator, launchDate);
-                writer.println(line);
+
+                float pos = 0;
+                String[] posString = position1.split(" ");
+                if(posString[1] == "W"){
+                    pos = -Integer.parseInt(posString[0]);
+                }
+                else{
+                    pos = Integer.parseInt(posString[0]);
+                }
+                System.out.println(pos);
+                //System.out.println(position + " " + position1 + " " + status + " " + sateliteName + " " + norad + " " + sateliteModel + " " + launchDate);
+                //String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s", position, position1, status, sateliteName, norad, sateliteModel, operator, launchDate);
+                //writer.println(line);
+                Satelite sat = new Satelite(sateliteName, pos);
+                satelites.add(sat);
+                //sat.PrintData();
                 d++;
             }
             Arrays.sort(id);
             writer.close();
-
         }
+        catch (Exception e){
+            System.out.println(e);
+        }
+
     }
 
-    @Override
-    public void PrintData() {
-
-    }
 }
