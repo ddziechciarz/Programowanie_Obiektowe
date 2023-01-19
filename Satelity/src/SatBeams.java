@@ -18,11 +18,18 @@ public class SatBeams extends WebPage {
     }
     @Override
     public void DownloadPage() {
+        //pobiera dane i tworzy nowe satelity
 
         int[] id = new int[365];
+        //String url = "https://satbeams.com/satellites?status=active";
         try{
             Document doc = Jsoup.connect(url).get();
             Elements table = doc.selectXpath("//*[@id=\"sat_grid\"]");   //#sat_grid.sat_grid
+            //System.out.println(table);
+            int d = 0;
+            String filename = "Satelites.csv";
+            File file = new File(filename);
+            PrintWriter writer = new PrintWriter(file);
             int[] arr = new int[400];
             int i = 0;
             for (Element row : table.select("tr")) {
@@ -33,7 +40,7 @@ public class SatBeams extends WebPage {
                 String position = cells.get(0).text();
                 String position1 = cells.get(1).text();
                 String status = cells.get(2).text();
-                String sateliteNames = cells.get(3).text();
+                String sateliteName = cells.get(3).text();
                 String norad = cells.get(4).text();
                 String sateliteModel = cells.get(6).text();
                 String operator = cells.get(7).text();
@@ -41,13 +48,6 @@ public class SatBeams extends WebPage {
                 id[i] = Integer.parseInt(norad);
                 arr[i] = Integer.parseInt(norad);
                 i++;
-
-                String extraNames = " ";
-                if(sateliteNames.indexOf("(") > 0){
-                    extraNames = sateliteNames.substring(sateliteNames.indexOf("(") + 1, sateliteNames.indexOf(")"));
-                    sateliteNames = sateliteNames.substring(0, sateliteNames.indexOf("("));
-                }
-
 
                 float pos = 0;
                 String[] posString = position1.split(" ");
@@ -57,18 +57,17 @@ public class SatBeams extends WebPage {
                 else{
                     pos = Integer.parseInt(posString[0]);
                 }
-
-                Satelite sat = new Satelite(sateliteNames, pos);
-                sat.AddOperator(operator);
-                sat.AddModel(sateliteModel);
-                sat.AddDate(launchDate);
-                if(extraNames != " "){
-                    sat.AddNames(extraNames);
-                }
-
+                System.out.println(pos);
+                //System.out.println(position + " " + position1 + " " + status + " " + sateliteName + " " + norad + " " + sateliteModel + " " + launchDate);
+                //String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s", position, position1, status, sateliteName, norad, sateliteModel, operator, launchDate);
+                //writer.println(line);
+                Satelite sat = new Satelite(sateliteName, pos);
                 satelites.add(sat);
+                //sat.PrintData();
+                d++;
             }
             Arrays.sort(id);
+            writer.close();
         }
         catch (Exception e){
             System.out.println(e);

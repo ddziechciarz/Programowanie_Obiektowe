@@ -3,14 +3,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.xml.crypto.Data;
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.io.File;
-import java.util.ArrayList;
 
 enum sortType{
     SPECIES,
@@ -20,18 +18,6 @@ enum sortType{
 
 public class Main {
     //private static String antUrl = "https://www.antwiki.org/wiki/images/0/0c/AntWiki_Regional_Taxon_List.txt";
-
-    //region UIVariables
-    private JFrame jFrame;
-    private JPanel options;
-    private JPanel utilsPanel;
-    private JPanel dataPanel;
-    private JTable table;
-    private JScrollPane scrollPane;
-    private String[] columnNames = {"Country", "Species Count", "Endemic species count"};
-
-
-    //endregion
 
     public static void main(String[] args) throws IOException {
         //DataManager dataManager = new DataManager();
@@ -44,14 +30,11 @@ public class Main {
 
         DataManager dataManager = new DataManager("anp app", 500, 600);
         dataManager.DownloadCountriesWithSpeciesNumber();
-        dataManager.SortData(sortType.ENDEMIC);
-
-        UIManager uiManager = new UIManager("ant app", 500, 600);
-        uiManager.AddTable(dataManager.GetData());
-        uiManager.ShowUI();
+        dataManager.AddTable();
+        dataManager.ShowUI();
     }
 
-    private void DownloadAntTxt(){
+    /*private void DownloadAntTxt(){
         File f = new File("mrowki.txt");
         if(f.exists() && !f.isDirectory()) {
             // do something
@@ -64,6 +47,8 @@ public class Main {
             }
         }
     }*/
+
+
 
     private static void downloadUsingStream(String urlStr, String file) throws IOException{
         URL url = new URL(urlStr);
