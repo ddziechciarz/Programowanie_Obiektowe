@@ -2,15 +2,25 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 
-public class DataManager extends UIManager{
+public class DataManager extends UIManager implements ActionListener {
 
     private final String countryListURL = "https://www.antwiki.org/wiki/Diversity_by_Country";
     public DataManager(String appName, int width, int height){
         super(appName, width, height);
         countries = new ArrayList<Country>();
+
+        showDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SortData(sortBy);
+                FillTable();
+            }
+        });
     }
 
     public void DownloadCountriesWithSpeciesNumber(){
@@ -72,5 +82,12 @@ public class DataManager extends UIManager{
 
     public ArrayList<Country> GetData(){
         return countries;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==showDataButton){
+            System.out.println("button pressed");
+        }
     }
 }
