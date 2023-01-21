@@ -33,6 +33,7 @@ public class UIManager{
         jFrame.setSize(width,height);
         jFrame.setTitle(appName);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jFrame.setResizable(false);
 
         utilsPanel = new JPanel();
         utilsPanel.setSize(width, 2/5*height);
@@ -62,8 +63,12 @@ public class UIManager{
 
         showDataButton = new JButton();
         showDataButton.setText("Sort Data");
-        showDataButton.setBounds(200, 100, 100, 200);
+        //showDataButton.setBounds(200, 100, 100, 200);
         utilsPanel.add(showDataButton);
+
+        showGraphButton = new JButton();
+        showGraphButton.setText("Show data on graph");
+        utilsPanel.add(showGraphButton);
 
         dataPanel = new JPanel();
         dataPanel.setSize(width, 3/5*height);

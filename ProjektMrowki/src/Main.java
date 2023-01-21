@@ -26,5 +26,6 @@ public class Main {
         dataManager.DownloadCountriesWithSpeciesNumber();
         dataManager.AddTable();
         dataManager.ShowUI();
+
     }
 }

@@ -1,24 +1,42 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
 
-public class DataManager extends UIManager implements ActionListener {
+public class DataManager extends UIManager{
 
+    private static final Logger log = LogManager.getRootLogger();
+    private JFrame graphFrame;
     private final String countryListURL = "https://www.antwiki.org/wiki/Diversity_by_Country";
     public DataManager(String appName, int width, int height){
         super(appName, width, height);
         countries = new ArrayList<Country>();
+        graphFrame = new GraphPanel();
 
         showDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SortData(sortBy);
                 FillTable();
+            }
+        });
+        showGraphButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(graphFrame.isVisible() == false){
+                    graphFrame.setVisible(true);
+                }
+                else{
+                    graphFrame.setVisible(false);
+                }
+
             }
         });
     }
@@ -84,10 +102,4 @@ public class DataManager extends UIManager implements ActionListener {
         return countries;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource()==showDataButton){
-            System.out.println("button pressed");
-        }
-    }
 }
