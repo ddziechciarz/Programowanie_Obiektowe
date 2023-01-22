@@ -28,7 +28,7 @@ public class UIManager{
     protected ArrayList<Country> countries;
     protected sortType sortBy = sortType.ALPHABETICALLY;
 
-    private String[] columnNames = {"Country", "Species Count", "Endemic species count"};
+    private String[] columnNames = {"Country", "Species Count", "Endemic species count*"};
 
     public UIManager(String appName, int width, int height){
 
@@ -55,7 +55,7 @@ public class UIManager{
         dataPanel.setLayout(new BorderLayout());
         jFrame.add(dataPanel);
 
-        String[] sorters = {"Alphabetical", "Species count", "Endemic species count"};
+        String[] sorters = {"Alphabetical", "Species count", "Endemic species count*"};
         comboBox = new JComboBox(sorters);
         comboBox.addActionListener(new ActionListener() {
             @Override
