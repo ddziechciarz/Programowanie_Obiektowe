@@ -13,28 +13,28 @@ import java.util.*;
 public class DataManager extends UIManager{
 
     private static final Logger log = LogManager.getRootLogger();
-    private JFrame graphFrame;
+    private GraphPanel graphFrame;
     private final String countryListURL = "https://www.antwiki.org/wiki/Diversity_by_Country";
     public DataManager(String appName, int width, int height){
         super(appName, width, height);
         countries = new ArrayList<Country>();
         graphFrame = new GraphPanel();
-
         showDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SortData(sortBy);
+                graphFrame.setData(countries, 30);
                 FillTable();
             }
         });
         showGraphButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(graphFrame.isVisible() == false){
-                    graphFrame.setVisible(true);
+                if(graphFrame.isVisable() == false){
+                    graphFrame.setVisable(true);
                 }
                 else{
-                    graphFrame.setVisible(false);
+                    graphFrame.setVisable(false);
                 }
 
             }
@@ -56,6 +56,7 @@ public class DataManager extends UIManager{
 
                 countries.add(new Country(country, species, endemic));
             }
+            graphFrame.setData(countries, 30);
         }
         catch (Exception ex){
             ex.printStackTrace();
