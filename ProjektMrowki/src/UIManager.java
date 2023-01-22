@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +22,9 @@ public class UIManager{
     protected JComboBox comboBox;
     protected JSlider jSlider;
     protected JLabel jLabel;
+    protected JLabel adnotation;
+
+    protected int displayCount = 30;
     protected ArrayList<Country> countries;
     protected sortType sortBy = sortType.ALPHABETICALLY;
 
@@ -36,18 +41,17 @@ public class UIManager{
 
         buttonsPanel = new JPanel();
         buttonsPanel.setBounds(0,0, width, height*1/10);
-        buttonsPanel.setBackground(Color.BLUE);
+        buttonsPanel.setLayout(new FlowLayout());
         jFrame.add(buttonsPanel);
 
         sliderPanel = new JPanel();
-        sliderPanel.setBounds(0,height*1/10,width,height*2/10);
-        sliderPanel.setBackground(Color.GRAY);
-        sliderPanel.setLayout(new BorderLayout());
+        sliderPanel.setBounds(0,height*1/10, width-17,height*2/10);
+        //sliderPanel.setBackground(Color.GRAY);
+        sliderPanel.setLayout(new GridLayout(3,1));
         jFrame.add(sliderPanel);
 
         dataPanel = new JPanel();
         dataPanel.setBounds(0, height*3/10, width, height*7/10);
-        dataPanel.setBackground(Color.GREEN);
         dataPanel.setLayout(new BorderLayout());
         jFrame.add(dataPanel);
 
@@ -75,27 +79,40 @@ public class UIManager{
 
         showDataButton = new JButton();
         showDataButton.setText("Sort Data");
-        //showDataButton.setBounds(200, 100, 100, 200);
-        buttonsPanel.add(showDataButton, BorderLayout.NORTH);
+        buttonsPanel.add(showDataButton);
 
         showGraphButton = new JButton();
         showGraphButton.setText("Show data on graph");
-        buttonsPanel.add(showGraphButton, BorderLayout.NORTH);
+        buttonsPanel.add(showGraphButton);
 
-        jLabel = new JLabel("Current value: 10");
-        jLabel.setVerticalAlignment(JLabel.TOP);
+        jLabel = new JLabel("Species to show on the graph: 30");
+        jLabel.setFont(new Font("Verdana",1,15));
         sliderPanel.add(jLabel);
 
-        jSlider = new JSlider(JSlider.HORIZONTAL, 10, 246, 30);
-        jSlider.setMajorTickSpacing(5);
-        jSlider.setPreferredSize(new Dimension(300, 40));
-        //sliderPanel.add(jSlider);
+        jSlider = new JSlider(JSlider.HORIZONTAL, 10, 50, 30);
+        jSlider.setPaintTicks(true);
+        jSlider.setMinorTickSpacing(5);
+        jSlider.setMajorTickSpacing(10);
+        jSlider.setPaintLabels(true);
+        jSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                displayCount = jSlider.getValue();
+                jLabel.setText("Species to show on the graph: " + displayCount);
+            }
+        });
+        sliderPanel.add(jSlider);
 
 
+        adnotation = new JLabel("*endemic species are species that appear only in one country");
+        adnotation.setFont(new Font("Verdana", 1, 10));
+        adnotation.setSize(width, 10);
+        sliderPanel.add(adnotation);
 
         log.info("GUI created successfully");
 
     }
+
 
     public void AddTable(){
         log.info("Creating data table");

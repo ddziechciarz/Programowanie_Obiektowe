@@ -44,7 +44,8 @@ public class GraphPanel{
 
         chartFrame = new ChartFrame("Species",jChart, true);
         chartFrame.setVisible(false);
-        chartFrame.setSize(700,550);
+        chartFrame.setSize(1200,750);
+        chartFrame.setResizable(false);
 
 
     }

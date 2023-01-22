@@ -23,7 +23,7 @@ public class DataManager extends UIManager{
             @Override
             public void actionPerformed(ActionEvent e) {
                 SortData(sortBy);
-                graphFrame.setData(countries, 30);
+                graphFrame.setData(countries, displayCount);
                 FillTable();
             }
         });
