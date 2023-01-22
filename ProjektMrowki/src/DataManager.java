@@ -57,9 +57,12 @@ public class DataManager extends UIManager{
                 countries.add(new Country(country, species, endemic));
             }
             graphFrame.setData(countries, 30);
+            System.out.println(countries.size());
         }
+
         catch (Exception ex){
             ex.printStackTrace();
+            log.info("Error while downloading data");
         }
     }
     public void SortData(sortType type){
@@ -97,6 +100,7 @@ public class DataManager extends UIManager{
         for(Country country : countries){
             country.DisplayData();
         }
+
     }
 
     public ArrayList<Country> GetData(){

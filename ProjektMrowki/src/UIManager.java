@@ -1,33 +1,32 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Objects;
+
 import org.apache.logging.log4j.*;
 
 public class UIManager{
     private static final Logger log = LogManager.getRootLogger();
 
     protected JFrame jFrame;
-    protected JPanel utilsPanel;
+    protected JPanel buttonsPanel;
+    protected JPanel sliderPanel;
     protected JPanel dataPanel;
     protected JTable table;
     protected JScrollPane scrollPane;
-
     protected JButton showDataButton;
     protected JButton showGraphButton;
-
     protected JComboBox comboBox;
+    protected JSlider jSlider;
+    protected JLabel jLabel;
     protected ArrayList<Country> countries;
-
     protected sortType sortBy = sortType.ALPHABETICALLY;
 
     private String[] columnNames = {"Country", "Species Count", "Endemic species count"};
 
     public UIManager(String appName, int width, int height){
-        log.info("Creating GUI");
+
 
         jFrame = new JFrame();
         jFrame.setSize(width,height);
@@ -35,9 +34,22 @@ public class UIManager{
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setResizable(false);
 
-        utilsPanel = new JPanel();
-        utilsPanel.setSize(width, 2/5*height);
-        jFrame.add(utilsPanel, BorderLayout.NORTH);
+        buttonsPanel = new JPanel();
+        buttonsPanel.setBounds(0,0, width, height*1/10);
+        buttonsPanel.setBackground(Color.BLUE);
+        jFrame.add(buttonsPanel);
+
+        sliderPanel = new JPanel();
+        sliderPanel.setBounds(0,height*1/10,width,height*2/10);
+        sliderPanel.setBackground(Color.GRAY);
+        sliderPanel.setLayout(new BorderLayout());
+        jFrame.add(sliderPanel);
+
+        dataPanel = new JPanel();
+        dataPanel.setBounds(0, height*3/10, width, height*7/10);
+        dataPanel.setBackground(Color.GREEN);
+        dataPanel.setLayout(new BorderLayout());
+        jFrame.add(dataPanel);
 
         String[] sorters = {"Alphabetical", "Species count", "Endemic species count"};
         comboBox = new JComboBox(sorters);
@@ -59,20 +71,29 @@ public class UIManager{
                 log.info("Changed sort type to " + sortBy);
             }
         });
-        utilsPanel.add(comboBox);
+        buttonsPanel.add(comboBox);
 
         showDataButton = new JButton();
         showDataButton.setText("Sort Data");
         //showDataButton.setBounds(200, 100, 100, 200);
-        utilsPanel.add(showDataButton);
+        buttonsPanel.add(showDataButton, BorderLayout.NORTH);
 
         showGraphButton = new JButton();
         showGraphButton.setText("Show data on graph");
-        utilsPanel.add(showGraphButton);
+        buttonsPanel.add(showGraphButton, BorderLayout.NORTH);
 
-        dataPanel = new JPanel();
-        dataPanel.setSize(width, 3/5*height);
-        jFrame.add(dataPanel, BorderLayout.SOUTH);
+        jLabel = new JLabel("Current value: 10");
+        jLabel.setVerticalAlignment(JLabel.TOP);
+        sliderPanel.add(jLabel);
+
+        jSlider = new JSlider(JSlider.HORIZONTAL, 10, 246, 30);
+        jSlider.setMajorTickSpacing(5);
+        jSlider.setPreferredSize(new Dimension(300, 40));
+        //sliderPanel.add(jSlider);
+
+
+
+        log.info("GUI created successfully");
 
     }
 
@@ -82,9 +103,11 @@ public class UIManager{
         Object[][] emptyTableData = new Object[countries.size()][columnNames.length];
 
         table = new JTable(emptyTableData, columnNames);
-        table.setBounds(0,0,jFrame.getWidth(),jFrame.getHeight() * 3/5);
+        table.setBounds(0,0,jFrame.getWidth()-20,jFrame.getHeight() * 3/5-20);
         scrollPane = new JScrollPane(table);
-        dataPanel.add(scrollPane);
+        //scrollPane.setSize(jFrame.getWidth(), jFrame.getHeight()*3/5-100);
+
+        dataPanel.add(scrollPane, BorderLayout.SOUTH);
         table.setAutoCreateRowSorter(false);
 
 
@@ -102,9 +125,6 @@ public class UIManager{
     }
 
     public void ShowUI(){
-
         jFrame.setVisible(true);
     }
-
-
 }

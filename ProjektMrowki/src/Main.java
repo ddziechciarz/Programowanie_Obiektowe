@@ -22,7 +22,7 @@ public class Main {
         Configurator.initialize(new DefaultConfiguration());
         Configurator.setRootLevel(Level.DEBUG);
 
-        DataManager dataManager = new DataManager("anp app", 500, 600);
+        DataManager dataManager = new DataManager("anp app", 500, 650);
         dataManager.DownloadCountriesWithSpeciesNumber();
         dataManager.AddTable();
         dataManager.ShowUI();

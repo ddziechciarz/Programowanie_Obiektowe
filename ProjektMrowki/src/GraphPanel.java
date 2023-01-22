@@ -28,11 +28,6 @@ public class GraphPanel{
 
     public GraphPanel(){
         log.info("Creating Graph Window");
-        //jFrame = new JFrame();
-        //jFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        //jFrame.setSize(700, 400);
-        //jFrame.setLayout(null);
-        //jFrame.setResizable(false);
         data = new DefaultCategoryDataset();
         jChart = ChartFactory.createBarChart(
                 "Species count in countries",
