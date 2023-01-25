@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.Scanner;
-import java.util.stream.StreamSupport;
 
 public class SatBeams extends WebPage {
     public SatBeams(String url){
@@ -30,7 +31,7 @@ public class SatBeams extends WebPage {
                 if (cells.size() == 0) {
                     continue;
                 }
-                String position = cells.get(0).text();
+                //String position = cells.get(0).text();
                 String position1 = cells.get(1).text();
                 String status = cells.get(2).text();
                 String sateliteNames = cells.get(3).text();
@@ -51,12 +52,18 @@ public class SatBeams extends WebPage {
 
                 float pos = 0;
                 String[] posString = position1.split(" ");
-                if(posString[1] == "W"){
-                    pos = -Integer.parseInt(posString[0]);
+                if(posString.length == 1){
+                    pos = 180;
                 }
                 else{
-                    pos = Integer.parseInt(posString[0]);
+                    if(posString[1].contains("W")){
+                        pos = -Integer.parseInt(posString[0]);
+                    }
+                    else{
+                        pos = Integer.parseInt(posString[0]);
+                    }
                 }
+
 
                 Satelite sat = new Satelite(sateliteNames, pos);
                 sat.AddOperator(operator);
@@ -70,8 +77,17 @@ public class SatBeams extends WebPage {
             }
             Arrays.sort(id);
         }
-        catch (Exception e){
-            System.out.println(e);
+        catch (HttpStatusException hse){
+            System.out.println(hse);
+            System.exit(1);
+        }
+        catch (UnknownHostException uhe){
+            System.out.println(uhe);
+            System.exit(1);
+        }
+        catch(IOException io) {
+            System.out.println(io);
+            System.exit(1);
         }
 
     }

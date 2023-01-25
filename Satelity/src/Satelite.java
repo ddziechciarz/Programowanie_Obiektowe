@@ -49,9 +49,11 @@ public class Satelite {
     }
 
     public void PrintData(){
-        String orbPos = (satelitePosition <0) ? -satelitePosition + " W" : satelitePosition + " E";
+        String satPos = (satelitePosition <0) ? -satelitePosition + " W" : satelitePosition + " E";
+        //System.out.println(satelitePosition);
+        //System.out.println(satPos);
 
-        System.out.print("name: " + name.get(0) + " | position: " + orbPos);
+        System.out.print("name: " + name.get(0) + " | position: " + satPos);
         if(clusterPosition != NULL){
             String clusterPos = (clusterPosition <0) ? -clusterPosition + " W" : clusterPosition + " E";
             System.out.print(" | cluster position: " + clusterPos);
