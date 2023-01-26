@@ -22,6 +22,10 @@ public abstract class WebPage {
 
     public abstract void DownloadPage();
 
+    public ArrayList<Satelite> getSatelites(){
+        return satelites;
+    }
+
     public void PrintData(){
         for (Satelite sat : satelites){
             sat.PrintData();

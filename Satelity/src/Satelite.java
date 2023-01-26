@@ -1,9 +1,10 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 
-public class Satelite {
+public class Satelite implements Comparator<Satelite> {
 
     public final static float NULL = 255;
 
@@ -17,6 +18,7 @@ public class Satelite {
     private float satelitePosition;
     private String model;
     private String launchDate;
+
 
     private Satelite(){
         clusterPosition = NULL;
@@ -83,4 +85,13 @@ public class Satelite {
         }
         System.out.println("");
     }
+
+    @Override
+    public int compare(Satelite o1, Satelite o2) {
+        return 0;
+    }
+
+    //@Override
+    //public boolean eq
+
 }
