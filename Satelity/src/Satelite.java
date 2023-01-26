@@ -48,6 +48,14 @@ public class Satelite {
         clusterPosition = clusterPos;
     }
 
+    public float GetPosiiton(){
+        return satelitePosition;
+    }
+
+    public String getName(){
+        return name.get(0);
+    }
+
     public void PrintData(){
         String satPos = (satelitePosition <0) ? -satelitePosition + " W" : satelitePosition + " E";
         //System.out.println(satelitePosition);

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public abstract class WebPage {
 
@@ -24,6 +26,34 @@ public abstract class WebPage {
         for (Satelite sat : satelites){
             sat.PrintData();
         }
+    }
+
+    public void PrintData(int amount) {
+        if(satelites.size() < amount){
+            System.out.println("Error, not enough satelites stored");
+            return;
+        }
+        for(int i = 0; i < amount; i++){
+            satelites.get(i).PrintData();
+        }
+    }
+
+    public void SortByPosition(){
+        Collections.sort(satelites, new Comparator<Satelite>() {
+            @Override
+            public int compare(Satelite o1, Satelite o2) {
+                return Float.valueOf(o2.GetPosiiton()).compareTo(o1.GetPosiiton());
+            }
+        });
+    }
+
+    public void SortByName(){
+        Collections.sort(satelites, new Comparator<Satelite>() {
+            @Override
+            public int compare(Satelite o1, Satelite o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
     }
 
 }
