@@ -58,6 +58,7 @@ public class Satelite implements Comparator<Satelite> {
         return name.get(0);
     }
 
+
     public void PrintData(){
         String satPos = (satelitePosition <0) ? -satelitePosition + " W" : satelitePosition + " E";
         //System.out.println(satelitePosition);
@@ -85,6 +86,37 @@ public class Satelite implements Comparator<Satelite> {
         }
         System.out.println("");
     }
+
+    @Override
+    public String toString(){
+        String toPrint ="";
+        String satPos = (satelitePosition <0) ? -satelitePosition + " W" : satelitePosition + " E";
+        //System.out.println(satelitePosition);
+        //System.out.println(satPos);
+
+         toPrint += "name: " + name.get(0) + " | position: " + satPos;
+        if(clusterPosition != NULL){
+            String clusterPos = (clusterPosition <0) ? -clusterPosition + " W" : clusterPosition + " E";
+            toPrint += " | cluster position: " + clusterPos;
+        }
+        if(operator != null){
+            toPrint += " | operator: " + operator;
+        }
+        if(model != null){
+            toPrint += " | model: " + model;
+        }
+        if(launchDate != null){
+           toPrint += " | launch date: " + launchDate;
+        }
+        if(name.size() > 1){
+            toPrint += " | extra names : ";
+            for (int i = 1; i< name.size(); i++){
+                toPrint += (name.get(i) + ", ");
+            }
+        }
+        return toPrint;
+    }
+
 
     @Override
     public int compare(Satelite o1, Satelite o2) {

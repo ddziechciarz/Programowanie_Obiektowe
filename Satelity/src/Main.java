@@ -14,6 +14,7 @@ public class Main {
 
         ArrayList<Satelite> satelitesKing = kingOfSat.getSatelites();
         ArrayList<Satelite> satelitesBeams = satBeams.getSatelites();
+        System.out.println(satelitesBeams.get(0));
         //Flysat flysat = new Flysat("https://www.flysat.com/en/satellitelist");
         //flysat.PrintData();
 
