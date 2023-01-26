@@ -4,9 +4,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class Satelite implements Comparator<Satelite> {
+public class Satelite implements Comparator<Satelite>, Comparable<Satelite> {
 
     public final static float NULL = 255;
+    public static final int NAME = 17;
+    public static final int POSITION = 60;
 
     private ArrayList<String> name;
 
@@ -18,6 +20,7 @@ public class Satelite implements Comparator<Satelite> {
     private float satelitePosition;
     private String model;
     private String launchDate;
+    private static int sortOption = NAME;
 
 
     private Satelite(){
@@ -87,6 +90,10 @@ public class Satelite implements Comparator<Satelite> {
         System.out.println("");
     }
 
+    //public void setSortOption(){
+  //
+    //}
+
     @Override
     public String toString(){
         String toPrint ="";
@@ -94,7 +101,7 @@ public class Satelite implements Comparator<Satelite> {
         //System.out.println(satelitePosition);
         //System.out.println(satPos);
 
-         toPrint += "name: " + name.get(0) + " | position: " + satPos;
+        toPrint += "name: " + name.get(0) + " | position: " + satPos;
         if(clusterPosition != NULL){
             String clusterPos = (clusterPosition <0) ? -clusterPosition + " W" : clusterPosition + " E";
             toPrint += " | cluster position: " + clusterPos;
@@ -120,8 +127,31 @@ public class Satelite implements Comparator<Satelite> {
 
     @Override
     public int compare(Satelite o1, Satelite o2) {
+        switch (sortOption){
+            case NAME :
+                return o1.getName().compareToIgnoreCase(o2.getName());
+        }
         return 0;
     }
+
+    @Override
+    public int compareTo(Satelite o) {
+        if(o == null){
+            return -1;
+        }
+        return this.getName().compareToIgnoreCase(o.getName());
+    }
+
+    public void setSortOption(int option) {
+        sortOption = switch(option){
+            case NAME, POSITION:
+                yield option;
+            default:
+                throw new IllegalArgumentException("unknown option: " + option);
+        };
+    }
+
+
 
     //@Override
     //public boolean eq

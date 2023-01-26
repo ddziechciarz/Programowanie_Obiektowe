@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -14,9 +15,16 @@ public class Main {
 
         ArrayList<Satelite> satelitesKing = kingOfSat.getSatelites();
         ArrayList<Satelite> satelitesBeams = satBeams.getSatelites();
-        System.out.println(satelitesBeams.get(0));
         //Flysat flysat = new Flysat("https://www.flysat.com/en/satellitelist");
         //flysat.PrintData();
 
+        satelitesBeams.get(0).setSortOption(Satelite.NAME);
+
+        Collections.sort(satelitesBeams);
+
+
+        for(int i = 0; i <7;i++){
+            System.out.println(satelitesBeams.get(i));
+        }
     }
 }
